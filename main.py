@@ -1,5 +1,5 @@
 from PIL import Image
-import os, errno
+import os, errno, time
 
 myPath = 'X:\\Backup\\Fotos'
 myNewPath = 'X:\\Backup\\Fotos2'
@@ -23,8 +23,17 @@ def move_photo(file_path, new_dir):
 
 
 def get_date_taken(path):
-    return Image.open(path)._getexif()[36867]
+    date = ''
+    try:
+        #print(time.strftime("%Y:%m:%d", time.gmtime(os.path.getmtime(path))))
+        date = Image.open(path)._getexif()[36867]
+    except Exception as e:
+        print('taken date not found: ' + path)
 
+    if date == '':
+        date = time.strftime("%Y:%m:%d", time.gmtime(os.path.getmtime(path)))
+
+    return date
 
 def discover_files():
     files_list = []
