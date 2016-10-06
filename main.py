@@ -1,7 +1,8 @@
 from PIL import Image
 import os, errno
 
-myPath = 'D:\\ft'
+myPath = 'X:\\Backup\\Fotos'
+myNewPath = 'X:\\Backup\\Fotos2'
 
 
 def ensure_dir(dir_name):
@@ -37,9 +38,10 @@ def discover_files():
 fl = discover_files()
 if len(fl) > 0:
     for file in fl:
-        date = get_date_taken(file)
-        print(date)
-        year = date[0:4]
-        month = date[5:7]
-        day = date[8:10]
-        move_photo(file, myPath + '\\' + year + '\\' + day + '_' + month + '\\' + file[file.rfind('\\')+1:])
+        print(file)
+        if os.path.splitext(file)[1] != '.mp4':
+            date = get_date_taken(file)
+            year = date[0:4]
+            month = date[5:7]
+            day = date[8:10]
+            move_photo(file, myNewPath + '\\' + year + '\\' + day + '_' + month + '\\' + file[file.rfind('\\')+1:])
