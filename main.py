@@ -18,6 +18,8 @@ def ensure_dir(dir_name):
 
 def move_photo(file_path, new_dir):
     ensure_dir(new_dir[:new_dir.rfind('\\')])
+    if os.path.exists(new_dir):
+        new_dir = new_dir[:new_dir.rfind('.')] + '_NEW' + new_dir[new_dir.rfind('.'):]
     os.rename(file_path, new_dir)
     return
 
@@ -48,9 +50,8 @@ fl = discover_files()
 if len(fl) > 0:
     for file in fl:
         print(file)
-        if os.path.splitext(file)[1] != '.mp4':
-            date = get_date_taken(file)
-            year = date[0:4]
-            month = date[5:7]
-            day = date[8:10]
-            move_photo(file, myNewPath + '\\' + year + '\\' + day + '_' + month + '\\' + file[file.rfind('\\')+1:])
+        date = get_date_taken(file)
+        year = date[0:4]
+        month = date[5:7]
+        day = date[8:10]
+        move_photo(file, myNewPath + '\\' + year + '\\' + month + '_' + day + '\\' + file[file.rfind('\\')+1:])
