@@ -1,8 +1,8 @@
 from PIL import Image
 import os, errno, time
 
-myPath = 'X:\\Backup\\Fotos'
-myNewPath = 'X:\\Backup\\Fotos2'
+myPath = 'C:\\Users\\adm-f\\Pictures\\iCloud Photos\\Downloads'
+myNewPath = 'C:\\Users\\adm-f\\Desktop\\google_photos'
 
 
 def ensure_dir(dir_name):
@@ -17,10 +17,13 @@ def ensure_dir(dir_name):
 
 
 def move_photo(file_path, new_dir):
-    ensure_dir(new_dir[:new_dir.rfind('\\')])
-    if os.path.exists(new_dir):
-        new_dir = new_dir[:new_dir.rfind('.')] + '_NEW' + new_dir[new_dir.rfind('.'):]
-    os.rename(file_path, new_dir)
+    try:
+        ensure_dir(new_dir[:new_dir.rfind('\\')])
+        if os.path.exists(new_dir):
+          new_dir = new_dir[:new_dir.rfind('.')] + '_NEW' + new_dir[new_dir.rfind('.'):]
+        os.rename(file_path, new_dir)
+    except FileExistsError as e:
+        print('NEW file already exists')
     return
 
 
